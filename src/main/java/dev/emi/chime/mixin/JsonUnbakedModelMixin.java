@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -32,6 +33,8 @@ public class JsonUnbakedModelMixin {
 	private static final Gson GSON = new Gson();
 	@Unique
 	private boolean chimeOverrides = false;
+
+	@Final
 	@Shadow
 	private List<ModelOverride> overrides;
 	@Shadow

@@ -147,10 +147,10 @@ public class ChimeClient implements ClientModInitializer {
 			}
 			return false;
 		});
-		register("world/biome/precipitation", String.class, (ItemStack stack, ClientWorld world, LivingEntity entity, String value) -> {
+		register("world/biome/precipitation", Boolean.class, (ItemStack stack, ClientWorld world, LivingEntity entity, Boolean value) -> {
 			Biome biome = getBiome(stack, world, entity);
 			if (biome != null) {
-				return biome.getPrecipitation().getName().equals(value);
+				return value.equals(biome.hasPrecipitation());
 			}
 			return false;
 		});
@@ -158,13 +158,6 @@ public class ChimeClient implements ClientModInitializer {
 			Biome biome = getBiome(stack, world, entity);
 			if (biome != null) {
 				return value.contains(biome.getTemperature());
-			}
-			return false;
-		});
-		register("world/biome/downfall", Range.class, (ItemStack stack, ClientWorld world, LivingEntity entity, Range value) -> {
-			Biome biome = getBiome(stack, world, entity);
-			if (biome != null) {
-				return value.contains(biome.getDownfall());
 			}
 			return false;
 		});
@@ -188,21 +181,21 @@ public class ChimeClient implements ClientModInitializer {
 			if (e == null) {
 				e = stack.getHolder();
 			}
-			return e != null && value.contains((float) world.getLightLevel(new BlockPos(e.getX(), e.getEyeY(), e.getZ())));
+			return e != null && value.contains((float) world.getLightLevel(new BlockPos((int) e.getX(), (int) e.getEyeY(), (int) e.getZ())));
 		});
 		register("entity/block_light", Range.class, (ItemStack stack, ClientWorld world, LivingEntity entity, Range value) -> {
 			Entity e = entity;
 			if (e == null) {
 				e = stack.getHolder();
 			}
-			return e != null && value.contains((float) world.getLightLevel(LightType.BLOCK, new BlockPos(e.getX(), e.getEyeY(), e.getZ())));
+			return e != null && value.contains((float) world.getLightLevel(LightType.BLOCK, new BlockPos((int) e.getX(), (int) e.getEyeY(), (int) e.getZ())));
 		});
 		register("entity/sky_light", Range.class, (ItemStack stack, ClientWorld world, LivingEntity entity, Range value) -> {
 			Entity e = entity;
 			if (e == null) {
 				e = stack.getHolder();
 			}
-			return e != null && value.contains((float) world.getLightLevel(LightType.SKY, new BlockPos(e.getX(), e.getEyeY(), e.getZ())));
+			return e != null && value.contains((float) world.getLightLevel(LightType.SKY, new BlockPos((int) e.getX(), (int) e.getEyeY(), (int) e.getZ())));
 		});
 		register("entity/can_see_sky", Boolean.class, (ItemStack stack, ClientWorld world, LivingEntity entity, Boolean value) -> {
 			Entity e = entity;
